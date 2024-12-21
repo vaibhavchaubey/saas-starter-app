@@ -9,7 +9,6 @@ export const config = {
 
 export default clerkMiddleware(async (auth, req) => {
   const { userId } = await auth();
-  console.log({ userId });
   const client = await clerkClient(); // Await the asynchronous clerkClient
   const currentPath = req.nextUrl.pathname;
 
@@ -21,8 +20,8 @@ export default clerkMiddleware(async (auth, req) => {
   if (userId) {
     try {
       const user = await client.users.getUser(userId); // Fetch user data using the async client
-      console.log({ user });
       const role = user.publicMetadata.role as string | undefined;
+      console.log({ role });
 
       // Admin role redirection logic
       if (role === 'admin' && currentPath === '/dashboard') {
